@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Microsoft.Data.SqlClient;
 
-namespace FmSoftlab.Logging
+namespace FMSoftlab.Logging
 {
     public static class AllExceptionsLogger
     {
@@ -13,9 +13,9 @@ namespace FmSoftlab.Logging
             if (e == null || log == null)
                 return;
             log.LogError($"Sql error, sql:{sql} Server:{e.Server}, Procedure:{e.Procedure}, ErrorCode:{e.ErrorCode}, State:{e.State}, Number:{e.Number}, LineNumber:{e.LineNumber}, Source:{e.Source}, {e.Message}, ClientConnectionId:{e.ClientConnectionId}");
-            foreach (SqlError x in e.Errors)
+            foreach (SqlError sqlError in e.Errors)
             {
-                log.LogError($"Sql error {x.Message}, Server:{x.Server}, Number:{x.Number}, Procedure:{x.Procedure}, LineNumber:{x.LineNumber}, Source:{x.Source}");
+                log.LogError($"Sql error {sqlError.Message}, Server:{sqlError.Server}, Number:{sqlError.Number}, Procedure:{sqlError.Procedure}, LineNumber:{sqlError.LineNumber}, Source:{sqlError.Source}");
             }
         }
         public static void LogException(this ILogger log, Exception ex, string sql)
